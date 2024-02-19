@@ -3,6 +3,7 @@ package main
 import (
 	"server/core"
 	"server/global"
+	"server/routers"
 )
 
 func main() {
@@ -12,4 +13,9 @@ func main() {
 	global.Log = core.InitLogger()
 	// 连接数据库
 	global.DB = core.InitGorm()
+	// router
+	addr := global.Config.System.Addr()
+	global.Log.Infof("server运行在: %s",addr)
+	router := routers.InitRouter()
+	router.Run(addr)
 }
